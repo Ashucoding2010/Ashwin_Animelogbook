@@ -228,6 +228,14 @@ document.addEventListener('click',e=>{
 /* The editor checkboxes are replaced by card hearts; preserve their values for existing entries. */
 const introArt=document.querySelector('.hero-art');
 if(introArt){introArt.classList.add('gold-comet-art');introArt.querySelectorAll('.orbit').forEach(el=>el.remove());}
+/* Jikan's public endpoint was discontinued; Tenrai keeps a Jikan-compatible v4-style schema. */
+const archiveNativeFetch=window.fetch.bind(window);
+window.fetch=function(input,init){
+  if(typeof input==='string'&&input.includes('https://api.jikan.moe/v4/')){
+    input=input.replace('https://api.jikan.moe/v4/','https://api.tenrai.org/v1/');
+  }
+  return archiveNativeFetch(input,init);
+};
 })();
 </script>
 </body></html>
